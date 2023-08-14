@@ -125,6 +125,7 @@ import nmt {
     ./modules/programs/pubs
     ./modules/programs/pyenv
     ./modules/programs/qcal
+    ./modules/programs/qcard
     ./modules/programs/qutebrowser
     ./modules/programs/readline
     ./modules/programs/rio

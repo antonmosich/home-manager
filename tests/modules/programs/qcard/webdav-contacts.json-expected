@@ -1,0 +1,11 @@
+{
+  "Addressbooks": [
+    {
+      "PasswordCmd": "pass show contact",
+      "Url": "https://card.example.com/anton/work",
+      "Username": "anton"
+    }
+  ],
+  "DetailThreshold": 5,
+  "SortByLastname": true
+}

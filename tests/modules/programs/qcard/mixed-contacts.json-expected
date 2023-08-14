@@ -1,0 +1,14 @@
+{
+  "Addressbooks": [
+    {
+      "Url": "https://example.com/contact.vcf"
+    },
+    {
+      "PasswordCmd": "pass show contact",
+      "Url": "https://card.example.com/anton/work",
+      "Username": "anton"
+    }
+  ],
+  "DetailThreshold": 3,
+  "SortByLastname": false
+}

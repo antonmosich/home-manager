@@ -1,0 +1,9 @@
+{
+  "Addressbooks": [
+    {
+      "Url": "https://example.com/contact.vcf"
+    }
+  ],
+  "DetailThreshold": 3,
+  "SortByLastname": false
+}
