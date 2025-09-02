@@ -215,6 +215,10 @@
       inherit (lib) concatStringsSep any;
       inherit (builtins) typeOf replaceStrings elem;
 
+      filterNullDirectives = lib.filter (
+        directive: !(directive.params or [ null ] == [ null ] && directive.children or [ ] == [ ])
+      );
+
       # ListOf String -> String
       indentStrings =
         let
@@ -295,19 +299,20 @@
 
       # Directive Conversion
       # ListOf NameParamChildrenTriplet -> ListOf String
-      convertDirectivesToSCFG = map (
-        directive:
-        (literalValueToString directive.name)
-        + toOptParamsString (directive ? "params") directive.params
-        + lib.optionalString (directive ? "children") (
-          " "
-          + ''
-            {
-            ${indentStrings (convertDirectivesToSCFG directive.children)}
-            }''
-        )
-      );
-
+      convertDirectivesToSCFG =
+        directives:
+        map (
+          directive:
+          (literalValueToString directive.name)
+          + toOptParamsString (directive ? "params") directive.params
+          + lib.optionalString (directive ? "children") (
+            " "
+            + ''
+              {
+              ${indentStrings (convertDirectivesToSCFG directive.children)}
+              }''
+          )
+        ) (filterNullDirectives directives);
     in
     directives:
     lib.optionalString (directives != [ ]) ''
