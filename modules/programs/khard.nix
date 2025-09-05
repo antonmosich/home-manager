@@ -107,6 +107,13 @@ in
               default value will set the aforementioned path as a single vdir.
             '';
           };
+          options.khard.discover = lib.mkOption {
+            type = types.bool;
+            default = false;
+            description = ''
+              If set to true, khard will automatically discover any addressbooks in ....path.
+            '';
+          };
         }
       );
     };
@@ -131,11 +138,20 @@ in
           [[${makeName anAccount.name anAbook}]]
           path = ${makePath anAccount.local.path anAbook}
         '';
+        makeDiscoverEntry = anAccount: ''
+          [[${makeName anAccount.name ""}]]
+          path = ${anAccount.local.path}/*
+          type = discover
+        '';
       in
       ''
         [addressbooks]
         ${lib.concatMapStringsSep "\n" (
-          acc: lib.concatMapStringsSep "\n" (makeEntry acc) acc.khard.addressbooks
+          acc:
+          if acc.khard.discover then
+            makeDiscoverEntry acc
+          else
+            lib.concatMapStringsSep "\n" (makeEntry acc) acc.khard.addressbooks
         ) (lib.attrValues accounts)}
 
         ${renderSettings cfg.settings}
